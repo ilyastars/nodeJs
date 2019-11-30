@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
 let users = {}, 
     usernames = []
-    
+
 io.on('connection', socket => {
       
   // mengirim pesan
@@ -28,12 +28,15 @@ io.on('connection', socket => {
     users[socket.id] = username
     // kirim data untuk semua user
     io.emit('onlineUsers', usernames)
-
-
     // console.log(socket.id, username);
   
     // kirim data untuk kita sendiri
     socket.emit('loginResponse', true)
+  })
+
+  // chat message
+  socket.on('newMessage', msg => {
+    io.emit('newMsg', msg)
   })
 });
 

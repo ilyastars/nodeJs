@@ -46,9 +46,24 @@ const showValidate = input => {
 }
 
 
+// ======== chat =========
+// kirim chat
+$(`#send`).click(() => {
+  socket.emit('newMessage', $('#text_box').val())
+  $('#text_box').val('')
+  
+})
 
+// event ketika ada chat
+socket.on('newMsg', msg => {
+  const element = `<li class="d-flex justify-content-between mb-1">
+  <div class="chat-body white pl-3 pr-3 pb-2 z-depth-1">
+    <p class="mb-0">${msg}</p>
+  </div>
+</li>`
 
-
+  $('.chat').append(element)
+})
 
 
 
